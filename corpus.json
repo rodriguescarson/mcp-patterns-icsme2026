@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "_comment": "Corpus enumeration for the MCP Server Architecture Patterns paper (ICSME 2026 Industry Track). Two parts: (1) the 15-server taxonomy_corpus that the pattern catalog was derived from; (2) the 30 classification_examples used in the §5.1 classification experiment. ANSYR servers are anonymized as Server-A through Server-E for IP reasons; categories disclosed.",
+  "taxonomy_corpus": {
+    "_comment": "The 15 independently developed MCP servers we coded to derive the pattern catalog (5 production ANSYR + 10 public).",
+    "ansyr_servers": [
+      {
+        "id": "ANSYR-A",
+        "category": "voice-tool aggregator (TTS + ASR + LLM-tool routing)",
+        "primary_pattern": "Tool Orchestrator",
+        "deployed_since": "2024-12"
+      },
+      {
+        "id": "ANSYR-B",
+        "category": "conversation session server (per-call dialogue state)",
+        "primary_pattern": "Stateful Session Server",
+        "deployed_since": "2025-01"
+      },
+      {
+        "id": "ANSYR-C",
+        "category": "telephony adapter (carrier/SIP integration with domain validation)",
+        "primary_pattern": "Domain-Specific Adapter",
+        "deployed_since": "2025-01"
+      },
+      {
+        "id": "ANSYR-D",
+        "category": "customer/CRM resource gateway (read user, account, history)",
+        "primary_pattern": "Resource Gateway",
+        "deployed_since": "2025-02"
+      },
+      {
+        "id": "ANSYR-E",
+        "category": "multi-tenant aggregator (proxies per-tenant downstream MCP servers)",
+        "primary_pattern": "Proxy Aggregator",
+        "deployed_since": "2025-02"
+      }
+    ],
+    "public_servers": [
+      {
+        "name": "modelcontextprotocol/servers/filesystem",
+        "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
+        "primary_pattern": "Resource Gateway"
+      },
+      {
+        "name": "modelcontextprotocol/servers/postgres",
+        "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres",
+        "primary_pattern": "Resource Gateway"
+      },
+      {
+        "name": "modelcontextprotocol/servers/sqlite",
+        "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/sqlite",
+        "primary_pattern": "Resource Gateway"
+      },
+      {
+        "name": "modelcontextprotocol/servers/github",
+        "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/github",
+        "primary_pattern": "Tool Orchestrator"
+      },
+      {
+        "name": "modelcontextprotocol/servers/slack",
+        "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/slack",
+        "primary_pattern": "Tool Orchestrator"
+      },
+      {
+        "name": "modelcontextprotocol/servers/brave-search",
+        "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
+        "primary_pattern": "Tool Orchestrator"
+      },
+      {
+        "name": "modelcontextprotocol/servers/fetch",
+        "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch",
+        "primary_pattern": "Tool Orchestrator"
+      },
+      {
+        "name": "modelcontextprotocol/servers/puppeteer",
+        "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer",
+        "primary_pattern": "Stateful Session Server"
+      },
+      {
+        "name": "modelcontextprotocol/servers/memory",
+        "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory",
+        "primary_pattern": "Stateful Session Server"
+      },
+      {
+        "name": "modelcontextprotocol/servers/git",
+        "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/git",
+        "primary_pattern": "Stateful Session Server"
+      }
+    ]
+  },
+  "classification_examples": {
+    "_comment": "30 server descriptions used in the §5.1 classification experiment. 6 per pattern. Mix of synthetic descriptions and abstractions of real servers. Classifier (Claude Haiku 4.5) sees only `name`, `tools`, `resources`, `description` — never `pattern`.",
+    "examples": [
+      {"name": "filesystem-server", "tools": ["read_file", "write_file", "list_directory"], "resources": ["file://{path}"], "description": "Exposes local filesystem as structured resources with CRUD operations.", "pattern": "Resource Gateway"},
+      {"name": "postgres-server", "tools": ["query", "insert", "update"], "resources": ["db://table/{name}"], "description": "Translates database tables into addressable MCP resources.", "pattern": "Resource Gateway"},
+      {"name": "s3-resource-server", "tools": ["get_object", "put_object", "list_objects"], "resources": ["s3://{bucket}/{key}"], "description": "Maps S3 objects to MCP resource URIs for LLM access.", "pattern": "Resource Gateway"},
+      {"name": "sqlite-server", "tools": ["read_query", "write_query", "list_tables"], "resources": ["sqlite://table/{name}"], "description": "Read-write access to a local SQLite database, surfacing tables as MCP resources.", "pattern": "Resource Gateway"},
+      {"name": "confluence-pages-server", "tools": ["get_page", "search_pages", "list_spaces"], "resources": ["wiki://space/{key}/page/{id}"], "description": "Surfaces Confluence pages and spaces as readable resources keyed by URI.", "pattern": "Resource Gateway"},
+      {"name": "gdrive-files-server", "tools": ["read_file", "list_files", "search"], "resources": ["gdrive://file/{id}"], "description": "Read-only Google Drive resource gateway with URI-addressed files.", "pattern": "Resource Gateway"},
+
+      {"name": "multi-api-orchestrator", "tools": ["weather", "search", "translate", "summarize"], "resources": [], "description": "Exposes multiple external APIs as distinct tools with unified error handling.", "pattern": "Tool Orchestrator"},
+      {"name": "code-execution-server", "tools": ["run_python", "run_javascript", "install_package", "read_output"], "resources": [], "description": "Orchestrates code execution environments with dependency management.", "pattern": "Tool Orchestrator"},
+      {"name": "github-server", "tools": ["create_issue", "list_repos", "get_pr", "merge_pr", "comment"], "resources": [], "description": "Exposes GitHub REST endpoints as discrete MCP tools for issue and PR workflows.", "pattern": "Tool Orchestrator"},
+      {"name": "slack-server", "tools": ["post_message", "list_channels", "search_messages", "get_user"], "resources": [], "description": "Wraps Slack Web API as a set of focused MCP tools for messaging and lookups.", "pattern": "Tool Orchestrator"},
+      {"name": "brave-search-server", "tools": ["web_search", "image_search", "news_search"], "resources": [], "description": "Single-purpose MCP server fronting Brave's web/news/image search endpoints as separate tools.", "pattern": "Tool Orchestrator"},
+      {"name": "fetch-http-server", "tools": ["fetch_url", "fetch_with_headers", "post_form"], "resources": [], "description": "Generic HTTP fetch tools with separate verbs for GET/POST and header customization.", "pattern": "Tool Orchestrator"},
+
+      {"name": "browser-automation-server", "tools": ["navigate", "click", "type", "screenshot", "get_html"], "resources": ["page://current"], "description": "Maintains browser session state across tool calls with persistent context.", "pattern": "Stateful Session Server"},
+      {"name": "git-server", "tools": ["checkout", "commit", "push", "diff", "status"], "resources": ["git://repo/{path}"], "description": "Wraps a git repository with session-scoped working directory state.", "pattern": "Stateful Session Server"},
+      {"name": "memory-kv-server", "tools": ["set", "get", "delete", "list_keys"], "resources": ["mem://{namespace}/{key}"], "description": "Per-session key-value memory shared across tool invocations within a connection.", "pattern": "Stateful Session Server"},
+      {"name": "repl-session-server", "tools": ["start_repl", "exec", "stop_repl", "get_history"], "resources": ["repl://session/{id}"], "description": "Long-lived Python REPL sessions; variables persist between exec calls.", "pattern": "Stateful Session Server"},
+      {"name": "sql-cursor-server", "tools": ["open_cursor", "fetch_rows", "close_cursor"], "resources": ["cursor://{id}"], "description": "Stateful SQL cursor server: streaming row reads across multiple tool calls.", "pattern": "Stateful Session Server"},
+      {"name": "ssh-shell-server", "tools": ["open_shell", "send_command", "read_output", "close_shell"], "resources": ["shell://{id}"], "description": "Persistent SSH shell sessions with input/output buffers maintained server-side.", "pattern": "Stateful Session Server"},
+
+      {"name": "mcp-hub-server", "tools": ["list_servers", "call_tool", "get_resource"], "resources": [], "description": "Aggregates multiple downstream MCP servers behind a single connection.", "pattern": "Proxy Aggregator"},
+      {"name": "tenant-router-server", "tools": ["route", "list_backends", "describe_backend"], "resources": [], "description": "Routes tool calls to per-tenant downstream MCP servers based on request metadata.", "pattern": "Proxy Aggregator"},
+      {"name": "registry-fanout-server", "tools": ["broadcast_query", "collect_responses", "list_endpoints"], "resources": [], "description": "Fans a single LLM query out to many backing MCP services and merges responses.", "pattern": "Proxy Aggregator"},
+      {"name": "policy-gateway-server", "tools": ["proxy_call", "list_allowed", "audit_log"], "resources": [], "description": "Wraps a downstream MCP server with auth, rate limiting, and audit logging.", "pattern": "Proxy Aggregator"},
+      {"name": "ollama-bridge-server", "tools": ["list_models", "proxy_chat", "load_model"], "resources": [], "description": "Bridges multiple local Ollama models behind a single MCP-facing interface.", "pattern": "Proxy Aggregator"},
+      {"name": "multi-cloud-mcp-router", "tools": ["select_provider", "invoke_remote", "list_providers"], "resources": [], "description": "Single MCP entrypoint that routes requests across AWS/GCP/Azure backing MCP servers.", "pattern": "Proxy Aggregator"},
+
+      {"name": "medical-ehr-server", "tools": ["get_patient", "search_icd10", "check_drug_interaction"], "resources": ["patient://{id}/records"], "description": "FHIR-based EHR adapter with domain-specific validation and HIPAA guardrails.", "pattern": "Domain-Specific Adapter"},
+      {"name": "ecommerce-adapter", "tools": ["search_products", "get_inventory", "place_order", "track_shipment"], "resources": ["product://{sku}"], "description": "E-commerce platform adapter with catalog, inventory, and order management.", "pattern": "Domain-Specific Adapter"},
+      {"name": "legal-contracts-server", "tools": ["lookup_clause", "validate_contract", "redline_diff"], "resources": ["contract://{id}"], "description": "Domain-aware legal contract assistant with clause taxonomy and validation rules.", "pattern": "Domain-Specific Adapter"},
+      {"name": "finance-trading-server", "tools": ["get_quote", "place_order", "check_compliance"], "resources": ["instrument://{symbol}"], "description": "Trading-platform adapter with regulatory compliance checks bundled into each tool.", "pattern": "Domain-Specific Adapter"},
+      {"name": "telephony-adapter", "tools": ["place_call", "send_dtmf", "transfer_call", "hangup"], "resources": ["call://{sid}"], "description": "Telephony domain adapter (SIP/Twilio) with call-state-aware tool semantics.", "pattern": "Domain-Specific Adapter"},
+      {"name": "k8s-platform-server", "tools": ["deploy", "scale", "get_pod_logs", "rollback"], "resources": ["pod://{namespace}/{name}"], "description": "Kubernetes platform adapter that exposes domain-specific operational primitives.", "pattern": "Domain-Specific Adapter"}
+    ]
+  }
+}
