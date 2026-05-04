@@ -11,7 +11,8 @@ Code, corpus, and prompts for:
 |------|---------|
 | `corpus.json` | Enumerated 15-server taxonomy corpus + 30 classification examples used in §5.1. |
 | `analyze.py` | Pattern classification experiment (§5.1). N=30, deterministic seed, Claude Haiku 4.5 as classifier. |
-| `transport_bench.py` | Transport latency benchmark (§5.2). Real measurements for `stdio` and `streamable-http`; modeled estimates for complex paths with explicit calibration source. |
+| `transport_bench.py` | Transport latency benchmark (§5.2). Real measurements for `stdio` and `streamable-http`; modeled estimates for cross-host paths with explicit calibration source. |
+| `tool_count_telemetry.csv` | Observational data underlying §5.3 — per-bucket accuracy and latency from ANSYR production telemetry (Q1 2025). Released for transparency; the underlying production session logs themselves are not redistributable. |
 | `requirements.txt` | Python dependencies. |
 | `results/` | Output directory created on first run. JSON results + regenerated figures. |
 

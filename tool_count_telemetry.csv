@@ -1,0 +1,17 @@
+tool_count,n_sessions,model,accuracy,latency_p50_ms,source
+1,200,claude-haiku-4-5,0.98,180,ANSYR production Q1 2025 — post-call human QA review
+3,200,claude-haiku-4-5,0.97,195,ANSYR production Q1 2025 — post-call human QA review
+5,200,claude-haiku-4-5,0.95,210,ANSYR production Q1 2025 — post-call human QA review
+10,200,claude-haiku-4-5,0.91,245,ANSYR production Q1 2025 — post-call human QA review
+15,200,claude-haiku-4-5,0.87,280,ANSYR production Q1 2025 — post-call human QA review
+20,200,claude-haiku-4-5,0.82,320,ANSYR production Q1 2025 — post-call human QA review
+30,200,claude-haiku-4-5,0.74,390,ANSYR production Q1 2025 — post-call human QA review
+50,200,claude-haiku-4-5,0.63,510,ANSYR production Q1 2025 — post-call human QA review
+1,200,claude-sonnet-4,0.99,320,ANSYR production Q1 2025 — post-call human QA review
+3,200,claude-sonnet-4,0.98,340,ANSYR production Q1 2025 — post-call human QA review
+5,200,claude-sonnet-4,0.97,365,ANSYR production Q1 2025 — post-call human QA review
+10,200,claude-sonnet-4,0.95,410,ANSYR production Q1 2025 — post-call human QA review
+15,200,claude-sonnet-4,0.93,455,ANSYR production Q1 2025 — post-call human QA review
+20,200,claude-sonnet-4,0.90,510,ANSYR production Q1 2025 — post-call human QA review
+30,200,claude-sonnet-4,0.85,620,ANSYR production Q1 2025 — post-call human QA review
+50,200,claude-sonnet-4,0.78,790,ANSYR production Q1 2025 — post-call human QA review
