@@ -3,7 +3,12 @@
 Code, corpus, and prompts for:
 
 > **MCP Server Architecture Patterns for LLM-Integrated Applications.**
-> Carson Rodrigues, Oysturn Vas. ICSME 2026 Industry Track.
+> Carson Rodrigues, Oysturn Vas. arXiv:2606.30317.
+
+**Correction (October 2026).** Earlier versions of this repository included `tool_count_telemetry.csv`,
+described as ANSYR production telemetry from Q1 2025. Those numbers could not be traced to production
+records, and both models they name were released after that quarter. The file has been removed and the
+analysis is withdrawn in version 2 of the paper. See `CORRECTION.md`.
 
 ## Contents
 
@@ -12,7 +17,8 @@ Code, corpus, and prompts for:
 | `corpus.json` | Enumerated 15-server taxonomy corpus + 30 classification examples used in §5.1. |
 | `analyze.py` | Pattern classification experiment (§5.1). N=30, deterministic seed, Claude Haiku 4.5 as classifier. |
 | `transport_bench.py` | Transport latency benchmark (§5.2). Real measurements for `stdio` and `streamable-http`; modeled estimates for cross-host paths with explicit calibration source. |
-| `tool_count_telemetry.csv` | Observational data underlying §5.3 — per-bucket accuracy and latency from ANSYR production telemetry (Q1 2025). Released for transparency; the underlying production session logs themselves are not redistributable. |
+| `kappa_eval.py` | Inter-rater reliability study: two independent LLM raters classify 54 held-out servers; writes `results_kappa.json`. Needs `ANTHROPIC_API_KEY`. |
+| `results_kappa.json` | Per-server predictions of both raters, Cohen's kappa with its bootstrap CI, and each rater's agreement with the authors' labels (n = 54, kappa 0.76). |
 | `requirements.txt` | Python dependencies. |
 | `results/` | Output directory created on first run. JSON results + regenerated figures. |
 
@@ -51,12 +57,14 @@ ls results/
 ## Citation
 
 ```bibtex
-@inproceedings{rodrigues2026mcp,
-  author    = {Rodrigues, Carson and Vas, Oysturn},
-  title     = {{MCP Server Architecture Patterns for LLM-Integrated Applications}},
-  booktitle = {Proc.\ IEEE Int.\ Conf.\ on Software Maintenance and Evolution (ICSME)},
-  year      = {2026},
-  note      = {Industry Track}
+@misc{rodrigues2026mcp,
+  author        = {Rodrigues, Carson and Vas, Oysturn},
+  title         = {{MCP Server Architecture Patterns for LLM-Integrated Applications}},
+  year          = {2026},
+  eprint        = {2606.30317},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  doi           = {10.48550/arXiv.2606.30317}
 }
 ```
 
